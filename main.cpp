@@ -14,6 +14,8 @@ int main(int argc, char* argv[]){
     string filename = argv[1];
     string searchString = argv[2];
 
+     transform(searchString.begin(), searchString.end(), searchString.begin(), ::tolower); // Convertir la cadena de búsqueda a minúsculas
+
     ifstream file(filename);
     if (!file.is_open()) {
         cerr << "No se pudo abrir el archivo: " << filename << endl;
@@ -27,10 +29,12 @@ int main(int argc, char* argv[]){
 
     cout<<"\n"<<endl;
     while (getline(file, line)) {
+        string temp = line;
+        transform(line.begin(), line.end(), line.begin(), ::tolower);
         if (line.find(searchString) != string::npos) {
-            cout << "Linea " << lineNumber << ": " << line << endl;
+            cout << "Linea " << lineNumber << ": " << temp << endl;
             linesMatches++;
-            matches += std::count(line.begin(), line.end(), searchString[0]);
+            matches += count(line.begin(), line.end(), searchString[0]);
         }
         lineNumber++;
     }
